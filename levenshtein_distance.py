@@ -11,7 +11,10 @@ def levenshtein_distance(str1: str, str2: str) -> int:
             return None
         if len(str1) == start_1 and len(str2) == start_2:
             return 0
-        elif start_1 < len(str1) and start_2 < len(str2) and str1[start_1] == str2[start_2]:
+        elif (
+            start_1 < len(str1) and start_2 < len(str2)
+            and str1[start_1] == str2[start_2]
+        ):
             return search(start_1 + 1, start_2 + 1)
         else:
             return min((
