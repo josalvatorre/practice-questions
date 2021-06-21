@@ -3,7 +3,7 @@ from typing import Dict, Optional, Tuple
 
 def longest_substring_without_duplication(string: str) -> str:
 
-    def new_max_interval(
+    def bigger_interval(
         current: Optional[Tuple[int, int]], new: Tuple[int, int],
     ) -> Tuple[int, int]:
         if current is None:
@@ -22,7 +22,7 @@ def longest_substring_without_duplication(string: str) -> str:
     for i, char in enumerate(string):
         last_index = last_seen.get(char)
         if last_index is not None and start_index <= last_index:
-            max_interval = new_max_interval(
+            max_interval = bigger_interval(
                 max_interval,
                 (start_index, i),
             )
@@ -31,7 +31,7 @@ def longest_substring_without_duplication(string: str) -> str:
             start_index = last_index + 1
         last_seen[char] = i
 
-    max_interval = new_max_interval(
+    max_interval = bigger_interval(
         max_interval,
         (start_index, len(string)),
     )
