@@ -20,7 +20,7 @@ class MinHeap:
         2 -> 5,6
         3 -> 7,8
         """
-        return i*2 + 1
+        return i * 2 + 1
 
     @staticmethod
     def _right_child_index(i: int) -> int:
@@ -35,7 +35,7 @@ class MinHeap:
         else:
             parent = (left - 2)/2
         """
-        return max(0, (i-1)//2)
+        return max(0, (i - 1) // 2)
 
     def build_heap(self, array: List[int]) -> List[int]:
         self._heap = copy.deepcopy(array)
@@ -52,15 +52,17 @@ class MinHeap:
             # These are the children that could replace the parent.
             smaller_children_indexes = sorted(
                 (
-                    child_i for getter in (
-                        MinHeap._left_child_index, MinHeap._right_child_index
+                    child_i
+                    for getter in (
+                        MinHeap._left_child_index,
+                        MinHeap._right_child_index,
                     )
                     if (
                         (child_i := getter(i)) < heap_end
                         and array[i] > array[child_i]
                     )
                 ),
-                key=lambda index: array[index]
+                key=lambda index: array[index],
             )
             if len(smaller_children_indexes) > 0:
                 # take the smaller child

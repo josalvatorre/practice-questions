@@ -11,7 +11,7 @@ def dijkstras_algorithm(start: int, edges) -> List[int]:
     return list of shortest distances from start to other vertices
     """
     # distances[i] == shortest distance to vertex i from start
-    distances = [float('inf') for _ in range(len(edges))]
+    distances = [float("inf") for _ in range(len(edges))]
     # distance from start->start is 0
     distances[start] = 0
     # set of explored vertices
@@ -33,7 +33,4 @@ def dijkstras_algorithm(start: int, edges) -> List[int]:
                 distances[current_min] + edge[1],
                 distances[dst],
             )
-    return list(map(
-        lambda x: -1 if x == float('inf') else x,
-        distances
-    ))
+    return list(map(lambda x: -1 if x == float("inf") else x, distances))

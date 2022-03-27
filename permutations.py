@@ -3,7 +3,6 @@ from typing import List
 
 
 def get_permutations(array: List[int]) -> List[int]:
-
     def swap(lst: List[int], i: int, j: int) -> None:
         lst[i], lst[j] = lst[j], lst[i]
         pass

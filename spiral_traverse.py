@@ -11,7 +11,7 @@ def spiral_traverse(array: List[List[int]]) -> List[int]:
     spiral = []
     while top_row <= bottom_row and left_col <= right_col:
         # top slice
-        spiral.extend(array[top_row][left_col: right_col + 1])
+        spiral.extend(array[top_row][left_col : right_col + 1])
 
         # right slice
         # do not double-count the corners
@@ -23,8 +23,9 @@ def spiral_traverse(array: List[List[int]]) -> List[int]:
         if bottom_row != top_row:
             spiral.extend(
                 array[bottom_row][
-                    right_col: left_col - len(array[bottom_row]) - 1: -1
-                ])
+                    right_col : left_col - len(array[bottom_row]) - 1 : -1
+                ]
+            )
 
         # left slice
         # do not double-count the corners

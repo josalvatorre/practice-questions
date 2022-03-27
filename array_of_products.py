@@ -11,7 +11,4 @@ def array_of_products(array: List[int]) -> List[int]:
     for i in range(len(array) - 2, -1, -1):
         factors_right[i] = factors_right[i + 1] * array[i + 1]
 
-    return list(
-        factors_left[i] * factors_right[i]
-        for i in range(len(array))
-    )
+    return list(factors_left[i] * factors_right[i] for i in range(len(array)))

@@ -6,7 +6,7 @@ def run_length_encoding(string: str) -> str:
     run_len_encoding_chunks: List[str] = []
 
     def add_chunk(chunks: List[str], chunk_length: int, char: str) -> None:
-        chunks.append(f'{chunk_length}{char}')
+        chunks.append(f"{chunk_length}{char}")
         pass
 
     chunk_start = 0
@@ -27,4 +27,4 @@ def run_length_encoding(string: str) -> str:
     if chunk_len > 0:
         add_chunk(run_len_encoding_chunks, chunk_len, string[-1])
 
-    return ''.join(run_len_encoding_chunks)
+    return "".join(run_len_encoding_chunks)

@@ -2,11 +2,8 @@ from typing import List
 
 
 def powerset(array: List[int]) -> List[List[int]]:
-
     def apply_mask(mask: List[bool]):
-        return [
-            array[i] for i in range(len(array)) if mask[i]
-        ]
+        return [array[i] for i in range(len(array)) if mask[i]]
 
     def possible_masks(mask: List[bool], start: int):
         if len(mask) <= start:
@@ -19,8 +16,6 @@ def powerset(array: List[int]) -> List[List[int]]:
         pass
 
     return [
-        apply_mask(mask) for mask in possible_masks(
-            [False for _ in range(len(array))],
-            0
-        )
+        apply_mask(mask)
+        for mask in possible_masks([False for _ in range(len(array))], 0)
     ]

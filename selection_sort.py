@@ -2,7 +2,6 @@ from typing import List
 
 
 def selection_sort(array: List[int]) -> List[int]:
-
     def index_of_smallest(start_: int) -> int:
         i = start_
         for j in range(start_ + 1, len(array)):

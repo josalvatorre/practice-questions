@@ -67,9 +67,13 @@ class BST:
                     # This is a single-node tree; do nothing
                     pass
             elif parent.left == self:
-                parent.left = self.left if self.left is not None else self.right
+                parent.left = (
+                    self.left if self.left is not None else self.right
+                )
             elif parent.right == self:
-                parent.right = self.left if self.left is not None else self.right
+                parent.right = (
+                    self.left if self.left is not None else self.right
+                )
         return self
 
     def get_min_value(self):

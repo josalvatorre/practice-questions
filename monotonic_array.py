@@ -1,6 +1,6 @@
-from typing import List, Optional, Callable
 import itertools
 import operator
+from typing import Callable, List, Optional
 
 
 def is_monotonic(array: List[int]) -> bool:
@@ -9,7 +9,7 @@ def is_monotonic(array: List[int]) -> bool:
 
     # 2-element sliding window of previous and current values
     prevs_currs = zip(
-        itertools.islice(array, len(array)-1),
+        itertools.islice(array, len(array) - 1),
         itertools.islice(array, 1, len(array)),
     )
 

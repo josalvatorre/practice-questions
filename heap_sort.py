@@ -43,7 +43,8 @@ def heap_sort(array: List[int]) -> List[int]:
         while True:
             bigger_child_i = max(
                 (
-                    child_index for get_child in (left_child, right_child)
+                    child_index
+                    for get_child in (left_child, right_child)
                     if (child_index := get_child(i)) < heap_end
                 ),
                 key=lambda index: buffer[index],

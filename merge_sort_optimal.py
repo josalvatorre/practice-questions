@@ -3,10 +3,11 @@ from typing import List
 
 
 def merge_sort(array: List[int]) -> List[int]:
-
     def merge(
-        range_a: range, range_b: range,
-        array_in: List[int], array_out: List[int],
+        range_a: range,
+        range_b: range,
+        array_in: List[int],
+        array_out: List[int],
     ) -> None:
         # indices tracking
         # range_a, range_b, array_out, and remaining_range

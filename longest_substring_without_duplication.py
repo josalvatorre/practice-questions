@@ -2,15 +2,16 @@ from typing import Dict, Optional, Tuple
 
 
 def longest_substring_without_duplication(string: str) -> str:
-
     def bigger_interval(
-        current: Optional[Tuple[int, int]], new: Tuple[int, int],
+        current: Optional[Tuple[int, int]],
+        new: Tuple[int, int],
     ) -> Tuple[int, int]:
         if current is None:
             return new
         else:
             return max(
-                current, new,
+                current,
+                new,
                 key=lambda interval: interval[1] - interval[0],
             )
 
@@ -35,4 +36,4 @@ def longest_substring_without_duplication(string: str) -> str:
         max_interval,
         (start_index, len(string)),
     )
-    return string[max_interval[0]: max_interval[1]]
+    return string[max_interval[0] : max_interval[1]]

@@ -1,4 +1,4 @@
-from typing import List, Generator, NamedTuple
+from typing import Generator, List, NamedTuple
 
 
 def smallest_difference(array_1: List[int], array_2: List[int]) -> List[int]:

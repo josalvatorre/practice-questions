@@ -10,7 +10,6 @@ class BST:
 
 
 def reconstruct_bst(values: List[int]):
-
     def subtree(low, high, i_box):
         if len(values) <= i_box[0]:
             return None
@@ -24,6 +23,7 @@ def reconstruct_bst(values: List[int]):
         return BST(
             value=value,
             left=subtree(low, value, i_box),
-            right=subtree(value, high, i_box))
+            right=subtree(value, high, i_box),
+        )
 
-    return subtree(float('-inf'), float('inf'), [0])
+    return subtree(float("-inf"), float("inf"), [0])

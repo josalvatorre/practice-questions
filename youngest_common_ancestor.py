@@ -7,11 +7,13 @@ class AncestralTree:
 
 def get_youngest_common_ancestor(
     top_ancestor: AncestralTree,
-    descendant_1: AncestralTree, descendant_2: AncestralTree,
+    descendant_1: AncestralTree,
+    descendant_2: AncestralTree,
 ):
     """
     descendant* are leaves in the tree.
     """
+
     def get_depth(node: AncestralTree) -> int:
         depth = 1
         nodes = [node.name]
@@ -22,8 +24,10 @@ def get_youngest_common_ancestor(
         return depth
 
     def youngest_ancestor(
-        deeper: AncestralTree, other: AncestralTree,
-        deeper_depth: int, other_depth: int,
+        deeper: AncestralTree,
+        other: AncestralTree,
+        deeper_depth: int,
+        other_depth: int,
     ) -> AncestralTree:
         # walk back up so that depth_1 == depth_2
         while deeper_depth > other_depth:

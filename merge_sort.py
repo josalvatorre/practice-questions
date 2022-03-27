@@ -2,7 +2,6 @@ from typing import List
 
 
 def merge_sort(array: List[int]) -> List[int]:
-
     def merge(sorted_1, sorted_2) -> List[int]:
         # merged should have enough room for both lists
         merged = [None] * (len(sorted_1) + len(sorted_2))

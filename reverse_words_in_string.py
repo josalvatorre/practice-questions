@@ -10,14 +10,12 @@ def reverse_words_in_string(string: str) -> str:
     for i in range(len(string) - 2, -1, -1):
         if string[i].isspace() != string[i + 1].isspace():
             # record this chunk
-            result_chunks.append(
-                string[i + 1: chunk_right + 1]
-            )
+            result_chunks.append(string[i + 1 : chunk_right + 1])
             # cut a new chunk
             chunk_right = i
         pass
 
     if 0 <= chunk_right:
-        result_chunks.append(string[:chunk_right + 1])
+        result_chunks.append(string[: chunk_right + 1])
 
-    return ''.join(result_chunks)
+    return "".join(result_chunks)

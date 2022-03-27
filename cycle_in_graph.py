@@ -23,7 +23,4 @@ def cycle_in_graph(edges: List[List[int]]) -> bool:
         in_search_path[v_start] = False
         return False
 
-    return any(
-        in_cycle(v) for v in range(len(edges))
-        if not ever_visited[v]
-    )
+    return any(in_cycle(v) for v in range(len(edges)) if not ever_visited[v])

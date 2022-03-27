@@ -1,5 +1,4 @@
 def number_of_ways_to_traverse_graph(width: int, height: int) -> int:
-
     def ways(w: int, h: int) -> int:
         if w == h == 0:
             # count this as one valid path

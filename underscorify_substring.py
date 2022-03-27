@@ -2,7 +2,7 @@ def underscorify_substring(string, substring):
     start_end_pairs = tuple(
         (start, end)
         for start in range(len(string))
-        if substring == string[start: (end := start + len(substring))]
+        if substring == string[start : (end := start + len(substring))]
     )
 
     underscore_indices = []
@@ -30,11 +30,11 @@ def underscorify_substring(string, substring):
     result = []
     for i in range(len(string)):
         if u < len(underscore_indices) and i == underscore_indices[u]:
-            result.append('_')
+            result.append("_")
             u += 1
         result.append(string[i])
 
     if u < len(underscore_indices):
-        result.append('_')
+        result.append("_")
 
-    return ''.join(result)
+    return "".join(result)

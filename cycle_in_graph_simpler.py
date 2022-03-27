@@ -8,6 +8,7 @@ def cycle_in_graph(edges: List[List[int]]) -> bool:
     Each list has indices of destination vertices for edges starting
     from vertex i.
     """
+
     def in_a_cycle(v_start: int, dests: Set[int]) -> bool:
         """
         init dests to empty set on the first call
@@ -16,9 +17,8 @@ def cycle_in_graph(edges: List[List[int]]) -> bool:
             return True
         else:
             return any(
-                in_a_cycle(v_end, dests|{v_start}) for v_end in edges[v_start]
+                in_a_cycle(v_end, dests | {v_start})
+                for v_end in edges[v_start]
             )
 
-    return any(
-        in_a_cycle(v_start, set()) for v_start in range(len(edges))
-    )
+    return any(in_a_cycle(v_start, set()) for v_start in range(len(edges)))

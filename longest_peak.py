@@ -2,12 +2,12 @@ from typing import List, Tuple
 
 
 def longest_peak(array: List[int]) -> int:
-
     def peak_len(a: Tuple[int, int, int]) -> int:
         return a[2] - a[0] + 1
 
     def longer_peak(
-            a: Tuple[int, int, int], b: Tuple[int, int, int],
+        a: Tuple[int, int, int],
+        b: Tuple[int, int, int],
     ) -> Tuple[int, int, int]:
         return max((a, b), key=peak_len)
 
@@ -28,7 +28,8 @@ def longest_peak(array: List[int]) -> int:
             # If right_exists, then we just broke from downhill, so record this peak
             if right_exists:
                 longest_peak = longer_peak(
-                    longest_peak, (left_i, tip_i, i - 1),
+                    longest_peak,
+                    (left_i, tip_i, i - 1),
                 )
 
             # if flat, start a new peak
@@ -51,7 +52,8 @@ def longest_peak(array: List[int]) -> int:
     # collect last peak
     if tip_i is not None and tip_i < (last_i := len(array) - 1):
         longest_peak = longer_peak(
-            longest_peak, (left_i, tip_i, last_i),
+            longest_peak,
+            (left_i, tip_i, last_i),
         )
 
     return 0 if longest_peak == longest_peak_null else peak_len(longest_peak)

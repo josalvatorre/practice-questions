@@ -41,13 +41,15 @@ def sift_down(heap, comes_before) -> None:
     while i < len(heap):
 
         child_candidates = tuple(
-            child for child in (left_child(i), right_child(i))
+            child
+            for child in (left_child(i), right_child(i))
             if child < len(heap) and comes_before(heap[child], heap[i])
         )
         if len(child_candidates) == 0:
             break
         elif len(child_candidates) == 2 and comes_before(
-            heap[child_candidates[1]], heap[child_candidates[0]],
+            heap[child_candidates[1]],
+            heap[child_candidates[0]],
         ):
             child = child_candidates[1]
         else:
@@ -86,18 +88,23 @@ class ContinuousMedianHandler:
 
         # by default, we'll add to the min heap
         heap, heap_cb, other_heap, other_heap_cb = (
-            self.min_heap, self.min_heap_comes_before,
-            self.max_heap, self.max_heap_comes_before,
+            self.min_heap,
+            self.min_heap_comes_before,
+            self.max_heap,
+            self.max_heap_comes_before,
         )
         if 0 < len(self.max_heap) and number <= self.max_heap[0]:
             heap, heap_cb, other_heap, other_heap_cb = (
-                other_heap, other_heap_cb, heap, heap_cb,
+                other_heap,
+                other_heap_cb,
+                heap,
+                heap_cb,
             )
 
         add_to_heap(number, heap, heap_cb)
 
         # if heap is now two elements bigger, we must re-balance
-        if len(other_heap)+2 == len(heap):
+        if len(other_heap) + 2 == len(heap):
             heap_top = heap[0]
             heap[0], heap[-1] = heap[-1], heap[0]
             heap.pop()

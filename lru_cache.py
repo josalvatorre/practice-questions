@@ -6,8 +6,8 @@ from typing import Optional, Tuple
 class Node:
     key: str
     value: int
-    next_: Optional['Node']
-    prev: Optional['Node']
+    next_: Optional["Node"]
+    prev: Optional["Node"]
 
 
 @dataclasses.dataclass(frozen=True)

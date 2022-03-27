@@ -1,13 +1,13 @@
 from typing import NamedTuple, Optional
 
-_LEFT = 'left'
-_RIGHT = 'right'
+_LEFT = "left"
+_RIGHT = "right"
 
 
 class _ParentTarget(NamedTuple):
-    parent: Optional['BST'] = None
+    parent: Optional["BST"] = None
     side: Optional[str] = None
-    target: Optional['BST'] = None
+    target: Optional["BST"] = None
     pass
 
 
@@ -16,11 +16,13 @@ class _ParentTarget(NamedTuple):
 # Feel free to add new properties and methods
 # to the class.
 class BST:
-
     @classmethod
     def find_parent_and_target(
-        cls, value: int, node: 'BST',
-        parent: Optional['BST'] = None, side: Optional[str] = None,
+        cls,
+        value: int,
+        node: "BST",
+        parent: Optional["BST"] = None,
+        side: Optional[str] = None,
     ) -> _ParentTarget:
         # right
         if node.value < value:
@@ -30,7 +32,10 @@ class BST:
             else:
                 # Look on right side
                 return cls.find_parent_and_target(
-                    value=value, node=node.right, parent=node, side=_RIGHT,
+                    value=value,
+                    node=node.right,
+                    parent=node,
+                    side=_RIGHT,
                 )
         # left
         elif value < node.value:
@@ -40,14 +45,19 @@ class BST:
             else:
                 # Look on left side
                 return cls.find_parent_and_target(
-                    value=value, node=node.left, parent=node, side=_LEFT,
+                    value=value,
+                    node=node.left,
+                    parent=node,
+                    side=_LEFT,
                 )
         # node.value == value
         else:
             return _ParentTarget(parent=parent, side=side, target=node)
 
     def get_sidemost(
-            self, side: str, parent: Optional['BST'] = None,
+        self,
+        side: str,
+        parent: Optional["BST"] = None,
     ) -> _ParentTarget:
         self_side = getattr(self, side)
         if self_side is None:
@@ -65,7 +75,7 @@ class BST:
         self.left = None
         self.right = None
 
-    def insert(self, value: int) -> 'BST':
+    def insert(self, value: int) -> "BST":
         # Write your code here.
         # Do not edit the return statement of this method.
 
@@ -89,7 +99,7 @@ class BST:
     def contains(self, value: int) -> bool:
         return self.find_parent_and_target(value, self).target is not None
 
-    def remove(self, value: int) -> 'BST':
+    def remove(self, value: int) -> "BST":
         # Write your code here.
         # Do not edit the return statement of this method.
 
@@ -107,12 +117,20 @@ class BST:
             if target.left is target.right is None:
                 return None
             elif target.right is not None:
-                substitute_parent, substitute_side, substitute = target.right.get_leftmost()
+                (
+                    substitute_parent,
+                    substitute_side,
+                    substitute,
+                ) = target.right.get_leftmost()
                 substitute_child = substitute.right
                 if substitute_parent is None:
                     substitute_parent, substitute_side = target, _RIGHT
             else:
-                substitute_parent, substitute_side, substitute = target.left.get_rightmost()
+                (
+                    substitute_parent,
+                    substitute_side,
+                    substitute,
+                ) = target.left.get_rightmost()
                 substitute_child = substitute.left
                 if substitute_parent is None:
                     substitute_parent, substitute_side = target, _LEFT

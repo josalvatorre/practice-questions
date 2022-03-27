@@ -6,7 +6,6 @@ class LinkedList:
 
 
 def merge_linked_lists(head_a, head_b) -> LinkedList:
-
     def first_head(a, b):
         return a if a.value <= b.value else b
 
@@ -18,7 +17,8 @@ def merge_linked_lists(head_a, head_b) -> LinkedList:
 
     while head_first.next is not None:
         if head_first.next is first_head(
-            head_first.next, head_other,
+            head_first.next,
+            head_other,
         ):
             head_first = head_first.next
         else:

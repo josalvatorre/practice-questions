@@ -1,4 +1,4 @@
-def find_closest_value_in_bst(tree: 'BST', target: int) -> int:
+def find_closest_value_in_bst(tree: "BST", target: int) -> int:
     node = tree
     closest = tree.value
 

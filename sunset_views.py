@@ -1,6 +1,6 @@
 def sunset_views(buildings, direction):
-    _EAST = 'EAST'
-    _WEST = 'WEST'
+    _EAST = "EAST"
+    _WEST = "WEST"
 
     def iter_from_sun():
         # sun comes from west

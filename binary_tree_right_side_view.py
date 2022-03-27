@@ -32,9 +32,9 @@ def right_side_view(root: TreeNode) -> List[int]:
 
             # We must search the left eventually.
             if root.left is not None:
-                left_stack.append(Left(
-                    node=root.left, height=current_height + 1
-                ))
+                left_stack.append(
+                    Left(node=root.left, height=current_height + 1)
+                )
 
             # Advance
             root = root.right

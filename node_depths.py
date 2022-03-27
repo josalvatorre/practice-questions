@@ -3,15 +3,11 @@ from typing import Iterable
 
 def node_depths(root) -> int:
     def child_nodes(r) -> Iterable:
-        return (
-            child for child in (r.left, r.right)
-            if child is not None
-        )
+        return (child for child in (r.left, r.right) if child is not None)
 
     def depths(r, depth: int) -> int:
         return depth + sum(
-            depths(child, depth + 1)
-            for child in child_nodes(r)
+            depths(child, depth + 1) for child in child_nodes(r)
         )
 
     return depths(root, 0)

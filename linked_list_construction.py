@@ -1,4 +1,4 @@
-from typing import Optional, Callable
+from typing import Callable, Optional
 
 
 # This is an input class. Do not edit.
@@ -21,7 +21,7 @@ class DoublyLinkedList:
         while node is not None:
             values.append(node.value)
             node = node.next
-        return ' -> '.join(map(str, values))
+        return " -> ".join(map(str, values))
 
     def _find_by(self, is_target: Callable[[Node], bool]) -> Optional[Node]:
         node = self.head

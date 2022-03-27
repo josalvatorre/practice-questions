@@ -17,10 +17,7 @@ def branch_sums(root) -> List[int]:
             continue
         # Add root.value to all elements in the
         # subtree's branch sums.
-        sums.extend(map(
-            lambda x: x + root.value,
-            branch_sums(subtree)
-        ))
+        sums.extend(map(lambda x: x + root.value, branch_sums(subtree)))
     # if there are no subtrees, then root.value is the branch sum.
     if len(sums) == 0:
         return [root.value]
