@@ -53,7 +53,8 @@ def three_number_sum(
     array = sorted(array)
     result: List[List[int]] = []
 
-    for a_index, a in enumerate(array):
+    for a_index in range(0, len(array) - 2):
+        a = array[a_index]
 
         def compare_to_largest_b(index: int):
             x = array[index]
@@ -69,7 +70,7 @@ def three_number_sum(
         if largest_b_index < a_index + 2:
             break
 
-        for b_index in reversed(range(a_index + 1, largest_b_index + 1)):
+        for b_index in reversed(range(a_index + 2, largest_b_index + 1)):
             b = array[b_index]
 
             c_index = search(
