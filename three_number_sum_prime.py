@@ -1,12 +1,7 @@
-from typing import Callable, List, Optional, Tuple
-
-Triplet = Tuple[int, int, int]
+from typing import Callable, List, Optional
 
 
 def median_low(first_index: int, last_index: int) -> int:
-    if last_index < first_index:
-        raise Exception("crossed indices")
-
     return (first_index + last_index) // 2
 
 
@@ -50,13 +45,13 @@ def compare(x: int, y: int) -> int:
     return 0
 
 
-def threeNumberSum(
+def three_number_sum(
     array: List[int],
     target_sum: int,
-) -> List[Tuple[int, int, int]]:
+) -> List[List[int]]:
 
     array = sorted(array)
-    result: List[Triplet] = []
+    result: List[List[int]] = []
 
     for a_index, a in enumerate(array):
 
@@ -83,6 +78,6 @@ def threeNumberSum(
                 lambda i: compare(sum((a, b, array[i])), target_sum),
             )
             if c_index is not None:
-                result.append((a, array[c_index], b))
+                result.append([a, array[c_index], b])
 
     return result

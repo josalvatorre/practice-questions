@@ -1,12 +1,12 @@
+from dataclasses import dataclass
 from typing import List
 
 
-# This is an input class. Do not edit.
+@dataclass
 class BST:
-    def __init__(self, value, left=None, right=None):
-        self.value = value
-        self.left = left
-        self.right = right
+    value: int
+    left: "BST" = None
+    right: "BST" = None
 
 
 def reconstruct_bst(values: List[int]):

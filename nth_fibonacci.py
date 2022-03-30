@@ -8,7 +8,7 @@ def get_nth_fib(n: int):
 
     f = [0, 1]
 
-    for i in range(3, n + 1):
+    for _ in range(3, n + 1):
         # calculate the ith fibonacci number
         ith = f[0] + f[1]
         # shift the sliding window forward by 1

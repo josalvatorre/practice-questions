@@ -1,9 +1,11 @@
-# This is an input class. Do not edit.
+from dataclasses import dataclass
+
+
+@dataclass
 class BST:
-    def __init__(self, value, left=None, right=None):
-        self.value = value
-        self.left = left
-        self.right = right
+    val: int
+    left: "BST" = None
+    right: "BST" = None
 
 
 def find_kth_largest_value_in_bst(tree, k: int):

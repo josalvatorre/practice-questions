@@ -3,9 +3,12 @@ cli:
   version: 0.8.1-beta
 lint:
   enabled:
-    - black-py@22.1.0
-    - flake8@4.0.1
-    - gitleaks@8.5.1
+    - black-py@22.3.0
+    - flake8@4.0.1:
+        packages:
+          - pep8-naming@0.12.1
+          - flake8-bugbear@22.3.23
+    - gitleaks@8.5.3
     - isort@5.10.1
     - prettier@2.6.1
     - taplo@release-cli-0.5.0

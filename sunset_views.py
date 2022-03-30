@@ -1,10 +1,10 @@
 def sunset_views(buildings, direction):
-    _EAST = "EAST"
+    _east = "EAST"
 
     def iter_from_sun():
         # sun comes from west
         range_ = range(len(buildings))
-        if direction == _EAST:
+        if direction == _east:
             range_ = reversed(range_)
         return (index for index in range_)
 
