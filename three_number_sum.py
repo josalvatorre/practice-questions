@@ -1,49 +1,4 @@
-from typing import Callable, List, Optional, Tuple
-
-
-def floored_midde(first_index: int, last_index: int):
-    return (first_index + last_index) // 2
-
-
-def search(
-    start_index: int,
-    last_index: int,
-    compare: Callable[[int], int],
-    return_closest: bool = False,
-) -> Optional[int]:
-
-    if last_index < start_index:
-        return None
-
-    while start_index < last_index:
-        med = floored_midde(start_index, last_index)
-        cmp = compare(med)
-
-        if cmp < 0:
-            # too small, go bigger
-            start_index = med + 1
-        elif 0 < cmp:
-            # too big, go smaller
-            last_index = med - 1
-        else:
-            return med
-
-    # start_index == last_index now
-    cmp = compare(start_index)
-    if cmp == 0:
-        return start_index
-
-    if return_closest:
-        return start_index
-    pass
-
-
-def compare(a: int, b: int) -> int:
-    if a < b:
-        return -1
-    if b < a:
-        return 1
-    return 0
+from typing import List, Tuple
 
 
 def three_number_sum(
@@ -51,51 +6,55 @@ def three_number_sum(
     target_sum: int,
 ) -> List[Tuple[int, int, int]]:
 
-    # array is now ascending
     array.sort()
     triplets = []
 
     for a_index in range(0, len(array) - 2):
         a = array[a_index]
 
-        if 0 <= a_index - 1 and a == array[a_index - 1]:
+        if 1 <= a_index and a == array[a_index - 1]:
             # we already saw this value
             continue
 
-        if (
-            # smallest triplet is too small
-            target_sum > sum(array[a_index : a_index + 3])
-            # biggest triplet is too small
-            and target_sum > a + sum(array[-2:])
+        def next_unique_b_index(current_b_index: int, current_c_index: int):
+            current_b_index += 1
+            while True:
+                if current_c_index <= current_b_index:
+                    return None
+                if array[current_b_index] != array[current_b_index - 1]:
+                    return current_b_index
+                current_b_index += 1
+
+        def next_unique_c_index(current_b_index: int, current_c_index: int):
+            current_c_index -= 1
+            while True:
+                if current_c_index <= current_b_index:
+                    return None
+                if array[current_c_index] != array[current_c_index + 1]:
+                    return current_c_index
+                current_c_index -= 1
+
+        b_index = a_index + 1
+        c_index = len(array) - 1
+        while (
+            b_index is not None and c_index is not None and b_index < c_index
         ):
-            continue
-        elif target_sum < sum(array[a_index : a_index + 3]):
-            # The smallest triplet is too big.
-            # We break because a is only going to get bigger.
-            break
-
-        # k starts at biggest, keeps decreasing
-        for b_index in reversed(range(a_index + 2, len(array))):
             b = array[b_index]
+            c = array[c_index]
 
-            if b_index + 1 < len(array) and b == array[b_index + 1]:
-                # we already saw this value
-                continue
+            current_sum = a + b + c
 
-            remainder = target_sum - a - b
-
-            c_index = search(
-                a_index + 1,
-                b_index - 1,
-                lambda i: compare(array[i], remainder),
-            )
-            if c_index is not None:
-                triplets.append([a, array[c_index], b])
-
-            if c_index == b_index - 1:
-                # c was the biggest element between a and b.
-                # Since b will only get smaller, there's no point in
-                # continuing.
-                break
+            if current_sum < target_sum:
+                # too small, go bigger
+                b_index = next_unique_b_index(b_index, c_index)
+            elif target_sum < current_sum:
+                # too big, go smaller
+                c_index = next_unique_c_index(b_index, c_index)
+            else:
+                triplets.append([a, b, c])
+                b_index = next_unique_b_index(b_index, c_index)
+                if b_index is None:
+                    break
+                c_index = next_unique_c_index(b_index, c_index)
 
     return triplets
