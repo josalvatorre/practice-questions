@@ -1,49 +1,44 @@
-from typing import Generator, List, NamedTuple
+from typing import List, Optional
 
 
-def smallest_difference(array_1: List[int], array_2: List[int]) -> List[int]:
-    """
-    Return the pair of ints with the smallest absolute difference
-    """
-
-    def abs_diff(a: int, b: int) -> int:
-        return abs(a - b)
-
-    class DiffNumNum(NamedTuple):
-        a: int
-        b: int
-
-        def diff(self) -> int:
-            return abs_diff(self.a, self.b)
+def smallest_difference(
+    array_1: List[int], array_2: List[int]
+) -> Optional[List[int]]:
+    if len(array_2) == 0:
+        return None
 
     array_1.sort()
     array_2.sort()
 
-    def diffs() -> Generator[DiffNumNum, None, None]:
-        """
-        generator will give diffs of neighboring values.
-        """
-        i = j = 0
-        last_i = len(array_1) - 1
-        last_j = len(array_2) - 1
+    min_pair: Optional[List[int]] = None
 
-        while True:
-            yield DiffNumNum(a=array_1[i], b=array_2[j])
+    array_a, a_index = array_1, 0
+    array_b, b_index = array_2, 0
+    # We don't care about elements left in array b.
+    # Those trailing elements can only be bigger than array_b[b_index].
+    # Therefore, their absolute difference can only be bigger than
+    # abs(array_a[any], array_b[-1])
+    while a_index < len(array_a):
+        # make sure that a <= b
+        if array_a[a_index] > array_b[b_index]:
+            a_index, b_index = b_index, a_index
+            array_a, array_b = array_b, array_a
 
-            if i == last_i and j == last_j:
-                return
-            elif i == last_i:
-                j += 1
-            elif j == last_j:
-                i += 1
-            else:
-                next_j_diff = abs_diff(array_1[i], array_2[j + 1])
-                next_i_diff = abs_diff(array_1[i + 1], array_2[j])
+        pair = [array_a[a_index], array_b[b_index]]
+        if array_a is not array_1:
+            pair.reverse()
 
-                if next_j_diff <= next_i_diff:
-                    j += 1
-                else:
-                    i += 1
+        min_pair = (
+            pair
+            if min_pair is None
+            else min(
+                min_pair,
+                pair,
+                key=lambda p: abs(p[0] - p[1]),
+            )
+        )
 
-    min_diff = min(diffs(), key=lambda d: d.diff())
-    return [min_diff.a, min_diff.b]
+        a_index += 1
+        pass
+
+    return min_pair
