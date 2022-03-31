@@ -73,10 +73,12 @@ def three_number_sum(
         for b_index in reversed(range(a_index + 2, largest_b_index + 1)):
             b = array[b_index]
 
+            remainder = target_sum - a - b
+
             c_index = search(
                 a_index + 1,
                 b_index - 1,
-                lambda i: compare(sum((a, b, array[i])), target_sum),
+                lambda i: compare(array[i], remainder),
             )
             if c_index is not None:
                 result.append([a, array[c_index], b])

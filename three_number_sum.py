@@ -1,60 +1,101 @@
-import operator
-from typing import Callable, List, Optional, Tuple, TypeVar
-
-# Element type for binary search
-T = TypeVar("T")
+from typing import Callable, List, Optional, Tuple
 
 
-def binary_search(
-    array: List[T],
-    target: T,
-    less_than: Callable[[T, T], bool] = operator.lt,
-    start: int = 0,
-    end: Optional[int] = None,
+def floored_midde(first_index: int, last_index: int):
+    return (first_index + last_index) // 2
+
+
+def search(
+    start_index: int,
+    last_index: int,
+    compare: Callable[[int], int],
+    return_closest: bool = False,
 ) -> Optional[int]:
-    def floored_median(a: int, b: int) -> int:
-        return (a + b) // 2
 
-    end = len(array) - 1 if end is None else end
+    if last_index < start_index:
+        return None
 
-    while start <= end:
-        med = floored_median(start, end)
-        if less_than(target, array[med]):
-            end = med - 1
-            continue
-        elif less_than(array[med], target):
-            start = med + 1
-            continue
-        return med
-    return None
+    while start_index < last_index:
+        med = floored_midde(start_index, last_index)
+        cmp = compare(med)
+
+        if cmp < 0:
+            # too small, go bigger
+            start_index = med + 1
+        elif 0 < cmp:
+            # too big, go smaller
+            last_index = med - 1
+        else:
+            return med
+
+    # start_index == last_index now
+    cmp = compare(start_index)
+    if cmp == 0:
+        return start_index
+
+    if return_closest:
+        return start_index
+    pass
+
+
+def compare(a: int, b: int) -> int:
+    if a < b:
+        return -1
+    if b < a:
+        return 1
+    return 0
 
 
 def three_number_sum(
     array: List[int],
     target_sum: int,
 ) -> List[Tuple[int, int, int]]:
-    # array is ascending
+
+    # array is now ascending
     array.sort()
     triplets = []
 
-    # i < j < k and array[i] < array[j] < array[k]
-    # i starts at smallest, keeps increasing
-    for i in range(0, len(array) - 2):
-        # k starts at biggest, keeps decreasing
-        for k in range(len(array) - 1, i, -1):
-            # array[j] needs to equal remainder in order to
-            # fulfill the triplet.
-            remainder = target_sum - (array[i] + array[k])
+    for a_index in range(0, len(array) - 2):
+        a = array[a_index]
 
-            j = binary_search(
-                array=array,
-                target=remainder,
-                start=i + 1,
-                end=k - 1,
-            )
-            if j is None:
+        if 0 <= a_index - 1 and a == array[a_index - 1]:
+            # we already saw this value
+            continue
+
+        if (
+            # smallest triplet is too small
+            target_sum > sum(array[a_index : a_index + 3])
+            # biggest triplet is too small
+            and target_sum > a + sum(array[-2:])
+        ):
+            continue
+        elif target_sum < sum(array[a_index : a_index + 3]):
+            # The smallest triplet is too big.
+            # We break because a is only going to get bigger.
+            break
+
+        # k starts at biggest, keeps decreasing
+        for b_index in reversed(range(a_index + 2, len(array))):
+            b = array[b_index]
+
+            if b_index + 1 < len(array) and b == array[b_index + 1]:
+                # we already saw this value
                 continue
 
-            triplets.append((array[i], array[j], array[k]))
+            remainder = target_sum - a - b
+
+            c_index = search(
+                a_index + 1,
+                b_index - 1,
+                lambda i: compare(array[i], remainder),
+            )
+            if c_index is not None:
+                triplets.append([a, array[c_index], b])
+
+            if c_index == b_index - 1:
+                # c was the biggest element between a and b.
+                # Since b will only get smaller, there's no point in
+                # continuing.
+                break
 
     return triplets
