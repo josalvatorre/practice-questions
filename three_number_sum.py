@@ -1,10 +1,40 @@
-from typing import List, Tuple
+from typing import Callable, List, Optional, Tuple
 
 
 def three_number_sum(
     array: List[int],
     target_sum: int,
 ) -> List[Tuple[int, int, int]]:
+    def next_unique_index(
+        index: int,
+        advance: Callable[[int], int],
+        invalid: Callable[[int], bool],
+    ) -> Optional[int]:
+        index, prev_index = advance(index), index
+        while True:
+            if invalid(index):
+                return None
+            if array[index] != array[prev_index]:
+                return index
+            index, prev_index = advance(index), index
+
+    def next_unique_b_index(
+        current_b_index: int, current_c_index: int
+    ) -> Optional[int]:
+        return next_unique_index(
+            current_b_index,
+            lambda x: x + 1,
+            lambda x: current_c_index <= x,
+        )
+
+    def next_unique_c_index(
+        current_b_index: int, current_c_index: int
+    ) -> Optional[int]:
+        return next_unique_index(
+            current_c_index,
+            lambda x: x - 1,
+            lambda x: x <= current_b_index,
+        )
 
     array.sort()
     triplets = []
@@ -15,24 +45,6 @@ def three_number_sum(
         if 1 <= a_index and a == array[a_index - 1]:
             # we already saw this value
             continue
-
-        def next_unique_b_index(current_b_index: int, current_c_index: int):
-            current_b_index += 1
-            while True:
-                if current_c_index <= current_b_index:
-                    return None
-                if array[current_b_index] != array[current_b_index - 1]:
-                    return current_b_index
-                current_b_index += 1
-
-        def next_unique_c_index(current_b_index: int, current_c_index: int):
-            current_c_index -= 1
-            while True:
-                if current_c_index <= current_b_index:
-                    return None
-                if array[current_c_index] != array[current_c_index + 1]:
-                    return current_c_index
-                current_c_index -= 1
 
         b_index = a_index + 1
         c_index = len(array) - 1
