@@ -3,6 +3,7 @@ from typing import List
 
 def move_element_to_end(array: List[int], to_move: int):
 
+    # Index of last non-match in array. We'll swap matches with this element.
     j = len(array) - 1
 
     for i in reversed(range(0, len(array))):
