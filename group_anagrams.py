@@ -1,21 +1,13 @@
 from itertools import islice, zip_longest
-from typing import List, NamedTuple, Tuple
+from typing import List, Tuple
 
 
 def group_anagrams(words: List[str]) -> List[List[int]]:
     if len(words) == 0:
         return []
 
-    class SortedWordInfo(NamedTuple):
-        sorted_word: str
-        index: int
-
     sorted_words: List[Tuple[str, int]] = sorted(
-        SortedWordInfo(
-            sorted_word="".join(sorted(word)),
-            index=i,
-        )
-        for i, word in enumerate(words)
+        ("".join(sorted(word)), i) for i, word in enumerate(words)
     )
 
     groups: List[List[str]] = [[]]
@@ -26,13 +18,10 @@ def group_anagrams(words: List[str]) -> List[List[int]]:
     ):
         group_1 = groups[-1]
 
-        if (
-            sw_info_2 is not None
-            and sw_info_1.sorted_word != sw_info_2.sorted_word
-        ):
+        if sw_info_2 is not None and sw_info_1[0] != sw_info_2[0]:
             groups.append([])
 
-        group_1.append(words[sw_info_1.index])
+        group_1.append(words[sw_info_1[1]])
         pass
 
     return groups
