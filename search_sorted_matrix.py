@@ -2,7 +2,9 @@ from typing import Callable, List, Optional
 
 
 def search(
-    first: int, last: int, compare: Callable[[int], int]
+    first: int,
+    last: int,
+    compare: Callable[[int], int],
 ) -> Optional[int]:
 
     while first <= last:
