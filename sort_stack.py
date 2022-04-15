@@ -1,33 +1,21 @@
-from typing import List, Optional
+from typing import List
 
 
 def sort_stack(stack: List[int]) -> List[int]:
-    def push_if_not_min(x: int):
-        nonlocal minimum, stack
-
-        if x == minimum:
-            minimum = None
-        else:
-            stack.append(x)
-        pass
-
-    def stack_insert(target_depth: int, actual_depth: int, current: int):
-        nonlocal minimum
-
-        if actual_depth == target_depth:
-            stack.append(minimum)
-            push_if_not_min(current)
+    def insert(stack: List[int], element: int) -> None:
+        if len(stack) == 0 or stack[-1] <= element:
+            stack.append(element)
             return
 
         top = stack.pop()
-        minimum = min(minimum, top)
-        stack_insert(target_depth, actual_depth + 1, top)
-
-        push_if_not_min(current)
+        insert(stack, element)
+        stack.append(top)
         pass
 
-    for target_depth in reversed(range(1, len(stack))):
-        top = stack.pop()
-        minimum: Optional[int] = top
-        stack_insert(target_depth, 0, top)
+    if len(stack) == 0:
+        return stack
+
+    top = stack.pop()
+    sort_stack(stack)
+    insert(stack, top)
     return stack
