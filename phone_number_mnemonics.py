@@ -20,6 +20,9 @@ def phone_number_mnemonics(phone_number: str) -> List[str]:
 
     def mnemonics(start: int) -> Generator[str, None, None]:
         if start == len(phone_number):
+            if len(phone_number) == 0:
+                yield from []
+                return
             yield "".join(selections)
             return
 
