@@ -1,5 +1,6 @@
-from typing import List
+from typing import Generator, List, Tuple
 
+IntPair = Tuple[int, int]
 _2DList = List[List[int]]
 
 
@@ -13,7 +14,7 @@ def set_(matrix: _2DList, value: int, row: int, col: int) -> None:
 
 
 def river_sizes(matrix: _2DList) -> List[int]:
-    def neighbors(row: int, col: int):
+    def neighbors(row: int, col: int) -> Generator[IntPair, None, None]:
         neighbor = [row, col]
         for coord_index, upper_bound in zip(
             range(2),
@@ -28,7 +29,7 @@ def river_sizes(matrix: _2DList) -> List[int]:
                 neighbor[coord_index] = original_value
         pass
 
-    def river_size(row: int, col: int):
+    def river_size(row: int, col: int) -> int:
         next_squares = {(row, col)}
 
         size = 0
