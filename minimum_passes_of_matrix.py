@@ -5,17 +5,18 @@ IntPair = Tuple[int, int]
 
 def minimum_passes_of_matrix(matrix: List[List[int]]) -> int:
     def neighbors(row: int, col: int) -> Generator[IntPair, None, None]:
-        for row_add in range(-1, 2):
-            r = row + row_add
-            if r < 0 or row_count <= r:
-                continue
-            yield (r, col)
-
-        for col_add in range(-1, 2):
-            c = col + col_add
-            if c < 0 or col_count <= c:
-                continue
-            yield (row, c)
+        coord = (row, col)
+        for coord_index, upper_bound in (
+            (0, row_count),
+            (1, col_count),
+        ):
+            neighbor = [row, col]
+            for adder in range(-1, 2):
+                value = coord[coord_index] + adder
+                if value < 0 or upper_bound <= value:
+                    continue
+                neighbor[coord_index] = value
+                yield tuple(neighbor)
         pass
 
     def get(row: int, col: int) -> int:
