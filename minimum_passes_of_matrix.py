@@ -1,66 +1,61 @@
-from enum import IntEnum, auto, unique
-from itertools import chain, count
-from typing import List, Set, Tuple
+from typing import Generator, List, Set, Tuple
 
 IntPair = Tuple[int, int]
 
 
-@unique
-class PassResult(IntEnum):
-    CONTINUE = auto()
-    SUCCESS = auto()
-    FAILURE = auto()
-    pass
-
-
 def minimum_passes_of_matrix(matrix: List[List[int]]) -> int:
+    def neighbors(row: int, col: int) -> Generator[IntPair, None, None]:
+        for row_add in range(-1, 2):
+            r = row + row_add
+            if r < 0 or row_count <= r:
+                continue
+            yield (r, col)
+
+        for col_add in range(-1, 2):
+            c = col + col_add
+            if c < 0 or col_count <= c:
+                continue
+            yield (row, c)
+        pass
+
+    def get(row: int, col: int) -> int:
+        return matrix[row][col]
+
     row_count = len(matrix)
-    if len(matrix) == 0:
+    if row_count == 0:
         return 0
     col_count = len(matrix[0])
 
-    def apply_pass() -> int:
-        flips: Set[IntPair] = set()
+    negatives: Set[IntPair] = set()
+    current_positives: Set[IntPair] = set()
+    next_positives: Set[IntPair] = set()
 
-        def add_if_flip(
-            value_coord: IntPair,
-            next_coord: IntPair,
-        ):
-            value = matrix[value_coord[0]][value_coord[1]]
-            next_value = matrix[next_coord[0]][next_coord[1]]
-            if value < 0 and next_value > 0:
-                flips.add(value_coord)
-            elif value > 0 and next_value < 0:
-                flips.add(next_coord)
-            pass
-
-        # left to right pass
-        for row in range(row_count):
-            for col in range(col_count - 1):
-                add_if_flip((row, col), (row, col + 1))
-
-        # top to bottom pass
+    for row in range(row_count):
         for col in range(col_count):
-            for row in range(row_count - 1):
-                add_if_flip(
-                    (row, col),
-                    (row + 1, col),
-                )
+            coord = (row, col)
+            value = get(*coord)
+            if 0 < value:
+                current_positives.add(coord)
+            elif value < 0:
+                negatives.add(coord)
+        pass
 
-        if len(flips) == 0:
-            return (
-                PassResult.FAILURE
-                if any(x < 0 for x in chain.from_iterable(matrix))
-                else PassResult.SUCCESS
-            )
+    pass_count = 0
+    while len(negatives) > 0:
+        flipped = False
 
-        for row, col in flips:
-            matrix[row][col] *= -1
-        return PassResult.CONTINUE
+        for coord in current_positives:
+            for neighbor_coord in neighbors(*coord):
+                if neighbor_coord in negatives:
+                    flipped = True
+                    next_positives.add(neighbor_coord)
+                    negatives.remove(neighbor_coord)
+        if not flipped:
+            break
+        pass_count += 1
 
-    for pass_count in count(start=0):
-        result = apply_pass()
-        if result == PassResult.SUCCESS:
-            return pass_count
-        elif result == PassResult.FAILURE:
-            return -1
+        current_positives.clear()
+        current_positives, next_positives = next_positives, current_positives
+        pass
+
+    return pass_count if len(negatives) == 0 else -1
