@@ -1,4 +1,4 @@
-from typing import Any, Generator
+from typing import Optional, Tuple
 
 
 # This is an input class. Do not edit.
@@ -11,20 +11,23 @@ class BinaryTree:
     pass
 
 
-def is_none(x: Any) -> bool:
-    return x is None
+def children(
+    tree: BinaryTree,
+) -> Tuple[Optional[BinaryTree], Optional[BinaryTree]]:
+    return (tree.left, tree.right)
 
 
-def children(tree: BinaryTree) -> Generator[BinaryTree, None, None]:
-    return (child for child in (tree.left, tree.right) if child is not None)
+def max_height_or_unbalanced(tree: BinaryTree) -> Optional[int]:
+    if tree is None:
+        return 0
+
+    heights = tuple(map(max_height_or_unbalanced, children(tree)))
+    if len(heights) == 0:
+        return 1
+    if any(h is None for h in heights) or abs(heights[0] - heights[1]) > 1:
+        return None
+    return 1 + max(heights)
 
 
 def height_balanced_binary_tree(tree: BinaryTree) -> bool:
-
-    kids = tuple(children(tree))
-    if len(kids) == 0:
-        return True
-    if len(kids) == 1:
-        return len(tuple(children(kids[0]))) == 0
-
-    return all(map(height_balanced_binary_tree, kids))
+    return max_height_or_unbalanced(tree) is not None
