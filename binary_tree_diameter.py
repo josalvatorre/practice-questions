@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from itertools import chain
+from typing import Tuple
 
 
 # This is an input class. Do not edit.
@@ -13,17 +15,16 @@ class BinaryTree:
 
 @dataclass
 class TreeInfo:
-    left_arm: int
-    right_arm: int
+    arms: Tuple[int, int]
     through_root: bool
     depth: int
 
     def diameter(self) -> int:
         # 1 for root
-        return self.left_arm + self.right_arm + 1
+        return sum(self.arms) + 1
 
     def max_arm(self) -> int:
-        return max(self.left_arm, self.right_arm)
+        return max(self.arms)
 
     pass
 
@@ -32,28 +33,24 @@ def binary_tree_diameter(tree: BinaryTree) -> int:
     def tree_info(node: BinaryTree) -> TreeInfo:
         if node is None:
             return TreeInfo(
-                left_arm=0,
-                right_arm=0,
+                arms=(0, 0),
                 through_root=False,
                 depth=0,
             )
 
-        left_child = tree_info(node.left)
-        right_child = tree_info(node.right)
+        children = tuple(map(tree_info, (node.left, node.right)))
+        children_depths = tuple(child.depth for child in children)
 
-        depth = max(left_child.depth, right_child.depth) + 1
+        depth = max(children_depths) + 1
 
         this = TreeInfo(
-            left_arm=left_child.depth,
-            right_arm=right_child.depth,
+            arms=children_depths,
             through_root=True,
             depth=depth,
         )
 
         max_child = max(
-            this,
-            left_child,
-            right_child,
+            chain([this], children),
             key=lambda child: child.diameter(),
         )
         if max_child is this:
