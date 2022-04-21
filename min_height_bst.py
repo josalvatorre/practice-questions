@@ -1,4 +1,4 @@
-from typing import Generator, List
+from typing import Generator, List, Optional
 
 
 class BST:
@@ -22,7 +22,7 @@ class BST:
     pass
 
 
-def min_height_bst(array: List[int]) -> BST:
+def min_height_bst(array: List[int]) -> Optional[BST]:
     def pre_order_traversal(
         start: int,
         end: int,
@@ -35,6 +35,9 @@ def min_height_bst(array: List[int]) -> BST:
         yield from pre_order_traversal(start, mid - 1)
         yield from pre_order_traversal(mid + 1, end)
         pass
+
+    if len(array) == 0:
+        return None
 
     elements = pre_order_traversal(0, len(array) - 1)
     tree = BST(next(elements))
