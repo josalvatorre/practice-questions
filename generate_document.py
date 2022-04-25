@@ -11,7 +11,10 @@ def character_frequencies(chars: str) -> DefaultDict[str, int]:
 
 def generate_document(characters: str, document: str) -> bool:
     char_freqs = character_frequencies(characters)
-    for doc_char, doc_freq in character_frequencies(document).items():
-        if char_freqs[doc_char] < doc_freq:
+
+    for doc_char in document:
+        char_freq = char_freqs[doc_char]
+        if char_freq == 0:
             return False
+        char_freqs[doc_char] -= 1
     return True
