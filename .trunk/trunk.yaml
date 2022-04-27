@@ -8,6 +8,7 @@ lint:
         packages:
           - pep8-naming@0.12.1
           - flake8-bugbear@22.3.23
+          - flake8-annotations@2.9.0
     - gitleaks@8.5.3
     - isort@5.10.1
     - prettier@2.6.1
