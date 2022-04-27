@@ -61,8 +61,8 @@ def search(board: _2DList, row: int, col: int) -> bool:
 
         if next_coords is None or search(board, *next_coords):
             return True
-    board[row][col] = 0
 
+    board[row][col] = 0
     return False
 
 
