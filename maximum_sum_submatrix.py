@@ -65,7 +65,6 @@ def maximum_sum_submatrix(matrix: _2DList, size: int) -> int:
             matrix_sums[col] += new - receding
             max_matrix_sum = max(max_matrix_sum, matrix_sums[col])
             col += 1
-
         pass
 
     return max_matrix_sum
