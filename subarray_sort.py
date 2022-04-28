@@ -19,7 +19,7 @@ def subarray_sort(array: List[int]) -> List[int]:
         if not in_order(array, i):
             min_ooo = min(min_ooo, x)
             max_ooo = max(max_ooo, x)
-            pass
+        pass
 
     if min_ooo == INF:
         return [-1, -1]
