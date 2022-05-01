@@ -35,11 +35,11 @@ def connect_neighbors(neighbors_list: List[Tuple[int]]) -> List[int]:
     return connected
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     for input_ in (
         [(1, 2), (2, 3), (3, 4)],
         [(4, 1), (3, 1), (2, 4)],
         [(5, 2), (4, 1), (1, 2)],
     ):
         print(connect_neighbors(input_))
-        pass
+    pass
