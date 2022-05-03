@@ -11,12 +11,13 @@ def connect_neighbors(neighbors_list: List[Tuple[int]]) -> List[int]:
         neighbors_dict[x].add(y)
         neighbors_dict[y].add(x)
 
-    first = next(
-        element
-        for element, neighbors in neighbors_dict.items()
-        if len(neighbors) == 1
-    )
-    connected = [first]
+    connected = [
+        next(
+            element
+            for element, neighbors in neighbors_dict.items()
+            if len(neighbors) == 1
+        )
+    ]
 
     while True:
         current = connected[-1]
