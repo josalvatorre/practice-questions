@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import DefaultDict, List, Set, Tuple
 
 
-def connect_neighbors(neighbors_list: List[Tuple[int]]) -> List[int]:
+def connect_neighbors(neighbors_list: List[Tuple[int, int]]) -> List[int]:
     if len(neighbors_list) == 0:
         return []
 
