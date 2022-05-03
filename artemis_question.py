@@ -29,8 +29,8 @@ def connect_neighbors(neighbors_list: List[Tuple[int]]) -> List[int]:
 
         if len(neighbors) == 0:
             break
-        else:
-            connected.append(neighbors.pop())
+
+        connected.append(neighbors.pop())
         pass
 
     return connected
