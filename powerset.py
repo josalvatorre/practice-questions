@@ -1,21 +1,28 @@
-from typing import List
+from typing import Generator, List
 
 
 def powerset(array: List[int]) -> List[List[int]]:
-    def apply_mask(mask: List[bool]):
+    def apply_mask(mask: List[bool]) -> List[int]:
         return [array[i] for i in range(len(array)) if mask[i]]
 
-    def possible_masks(mask: List[bool], start: int):
+    def possible_masks(
+        mask: List[bool], start: int
+    ) -> Generator[List[bool], None, None]:
         if len(mask) <= start:
             yield mask
-        else:
-            for val in (True, False):
-                mask[start] = val
-                for m in possible_masks(mask, start + 1):
-                    yield m
+            return
+
+        for val in (True, False):
+            mask[start] = val
+            yield from possible_masks(mask, start + 1)
         pass
 
-    return [
-        apply_mask(mask)
-        for mask in possible_masks([False for _ in range(len(array))], 0)
-    ]
+    return list(
+        map(
+            apply_mask,
+            possible_masks(
+                [False] * len(array),
+                0,
+            ),
+        )
+    )
