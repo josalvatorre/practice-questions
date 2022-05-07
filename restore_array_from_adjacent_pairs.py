@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import DefaultDict, List, Set, Tuple
 
 
-def connect_neighbors(neighbors_list: List[Tuple[int, int]]) -> List[int]:
+def restore_array(neighbors_list: List[Tuple[int, int]]) -> List[int]:
     if len(neighbors_list) == 0:
         return []
 
@@ -42,5 +42,5 @@ if __name__ == "__main__":
         [(4, 1), (3, 1), (2, 4)],
         [(5, 2), (4, 1), (1, 2)],
     ):
-        print(connect_neighbors(input_))
+        print(restore_array(input_))
     pass
