@@ -29,6 +29,10 @@ def get(board: StringBoard, row: int, col: int) -> str:
 
 
 def boggle_board(board: StringBoard, words: List[str]) -> List[str]:
+    """
+    TODO speed up by destroying trie paths that already lead to a word.
+    """
+
     def in_bounds(coords: Tuple[int, int]) -> bool:
         for value, hi_bound in zip(
             coords,
