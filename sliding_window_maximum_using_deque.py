@@ -3,7 +3,7 @@ from typing import List
 
 
 def max_sliding_window(nums: List[int], window_size: int) -> List[int]:
-    def clean_decreasing_window(index: int) -> None:
+    def push(index: int) -> None:
         while (
             0 < len(decreasing_window)
             and decreasing_window[0] < index - window_size + 1
@@ -15,21 +15,19 @@ def max_sliding_window(nums: List[int], window_size: int) -> List[int]:
             and nums[decreasing_window[-1]] < nums[index]
         ):
             decreasing_window.pop()
+
+        decreasing_window.append(index)
         pass
 
     decreasing_window = deque()
 
     for i in range(window_size):
-        clean_decreasing_window(i)
-        decreasing_window.append(i)
-        pass
+        push(i)
 
     maxs: List[int] = [nums[decreasing_window[0]]]
 
     for i in range(window_size, len(nums)):
-        clean_decreasing_window(i)
-        decreasing_window.append(i)
+        push(i)
         maxs.append(nums[decreasing_window[0]])
-        pass
 
     return maxs
